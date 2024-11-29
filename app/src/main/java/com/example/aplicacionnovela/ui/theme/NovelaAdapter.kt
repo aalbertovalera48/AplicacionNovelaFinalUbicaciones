@@ -1,4 +1,6 @@
+// NovelaAdapter.kt
 package com.example.aplicacionnovela.ui.theme
+
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -6,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.TextView
 import com.example.aplicacionnovela.R
-
 
 class NovelaAdapter(private val context: Context, private val novelas: List<Novela>) : BaseAdapter() {
 
@@ -41,4 +42,3 @@ class NovelaAdapter(private val context: Context, private val novelas: List<Nove
         return view
     }
 }
-
