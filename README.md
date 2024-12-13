@@ -1,4 +1,4 @@
-# Aplicación de Gestión de Novelas Actualizada - Alberto Valera
+# Aplicación de Gestión de Novelas Final Ubicaciones - Alberto Valera
 
 Link al Repositorio: https://github.com/aalbertovalera48/AplicacionNovelaFinalUbicaciones.git
 
