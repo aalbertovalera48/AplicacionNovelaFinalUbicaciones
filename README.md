@@ -5,7 +5,7 @@ Link al Repositorio: https://github.com/aalbertovalera48/AplicacionNovelaFinalUb
 Link a la base de datos Firebase: https://console.firebase.google.com/project/gestion-de-novelas-actualizado/database/gestion-de-novelas-actualizado-default-rtdb/data/~2F?hl=es-419
 
 ## Objetivo
-El objetivo del proyecto es extender la funcionalidad de la práctica anterior "Gestión Novelas". Se busca conectar el código fuente con una base de datos de Firebase e implementar mecanismos de sincronización en segundo plano, permitiendo a los usuarios gestionar su biblioteca de novelas de manera más eficiente y accesible.
+El objetivo del proyecto es extender la funcionalidad de la práctica anterior "Gestión Novelas". Se busca conectar el código fuente con una base de datos de Firebase e implementar mecanismos de sincronización en segundo plano, permitiendo a los usuarios gestionar su biblioteca de novelas de manera más eficiente y accesible y viendo la ubicación de cada una de ellas en un mapa geográfico.
 
 ## Características Principales
 - **Interfaz de usuario amigable**: Diseño intuitivo que permite una fácil navegación y gestión de novelas.
