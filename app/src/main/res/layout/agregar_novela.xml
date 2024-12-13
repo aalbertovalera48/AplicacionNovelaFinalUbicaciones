@@ -8,7 +8,7 @@
     <EditText
         android:id="@+id/editTextTituloAñadir"
         android:layout_width="match_parent"
-        android:layout_height="80dp"
+        android:layout_height="100dp"
         android:inputType="text"
         android:hint="Título de la Novela" />
 
@@ -30,4 +30,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Sinopsis" />
+    <EditText
+        android:id="@+id/editTextLatitudAñadir"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Latitud"
+        android:inputType="numberDecimal" />
+
+    <EditText
+        android:id="@+id/editTextLongitudAñadir"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Longitud"
+        android:inputType="numberDecimal" />
     </LinearLayout>

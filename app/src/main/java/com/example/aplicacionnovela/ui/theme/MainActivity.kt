@@ -1,5 +1,6 @@
 package com.example.aplicacionnovela.ui.theme
 
+
 import SyncTask
 import android.app.AlertDialog
 import android.content.Intent
@@ -66,6 +67,17 @@ class MainActivity : AppCompatActivity() {
             startActivity(Intent(this, SettingsActivity::class.java))
         }
 
+        findViewById<Button>(R.id.map_button).setOnClickListener {
+            val intent = Intent(this, LocationActivity::class.java)
+            val latitudes = novelas.mapNotNull { it.latitud }.toDoubleArray()
+            val longitudes = novelas.mapNotNull { it.longitud }.toDoubleArray()
+            val titles = novelas.mapNotNull { it.titulo }.toTypedArray()
+            intent.putExtra("latitudes", latitudes)
+            intent.putExtra("longitudes", longitudes)
+            intent.putExtra("titles", titles)
+            startActivity(intent)
+        }
+
         AlarmManager.manageSync(this)
 
         if (savedInstanceState == null) {
@@ -126,28 +138,6 @@ class MainActivity : AppCompatActivity() {
         Toast.makeText(this, "Reseña añadida", Toast.LENGTH_SHORT).show()
     }
 
-    private fun mostrarDialogoAñadirNovela() {
-        val builder = AlertDialog.Builder(this)
-        val inflater = layoutInflater
-        val view: View = inflater.inflate(R.layout.agregar_novela, null)
-        val editTextTitulo: EditText = view.findViewById(R.id.editTextTituloAñadir)
-        val editTextAutor: EditText = view.findViewById(R.id.editTextAutorAñadir)
-        val editTextAnio: EditText = view.findViewById(R.id.editTextAnioAñadir)
-        val editTextSinopsis: EditText = view.findViewById(R.id.editTextSinopsisAñadir)
-
-        builder.setView(view)
-            .setTitle("Añadir Novela a la Lista")
-            .setNegativeButton("Cancelar", null)
-            .setPositiveButton("Añadir") { _, _ ->
-                val titulo = editTextTitulo.text.toString()
-                val autor = editTextAutor.text.toString()
-                val añoPublicacion = editTextAnio.text.toString().toIntOrNull() ?: 0
-                val sinopsis = editTextSinopsis.text.toString()
-                añadirNovelaLista(titulo, autor, añoPublicacion, sinopsis)
-            }
-        builder.create().show()
-    }
-
     private fun mostrarDialogoEliminarNovela() {
         val builder = AlertDialog.Builder(this)
         val inflater = layoutInflater
@@ -193,7 +183,9 @@ class MainActivity : AppCompatActivity() {
         title: String,
         autor: String,
         añoPublicacion: Int,
-        sinopsis: String
+        sinopsis: String,
+        latitud: Double?,
+        longitud: Double?
     ) {
         if (novelas.any { it.titulo.equals(title, ignoreCase = true) }) {
             Toast.makeText(this, "La novela ya está en la lista", Toast.LENGTH_SHORT).show()
@@ -206,13 +198,41 @@ class MainActivity : AppCompatActivity() {
             autor = autor,
             añoPublicacion = añoPublicacion,
             sinopsis = sinopsis,
-            favorito = false
+            favorito = false,
+            latitud = latitud,
+            longitud = longitud
         )
 
         firebaseHelper.agregarNovela(nuevaNovela)
         novelas.add(nuevaNovela)
         adapter.notifyDataSetChanged()
         Toast.makeText(this, "Novela añadida a la lista", Toast.LENGTH_SHORT).show()
+    }
+
+    private fun mostrarDialogoAñadirNovela() {
+        val builder = AlertDialog.Builder(this)
+        val inflater = layoutInflater
+        val view: View = inflater.inflate(R.layout.agregar_novela, null)
+        val editTextTitulo: EditText = view.findViewById(R.id.editTextTituloAñadir)
+        val editTextAutor: EditText = view.findViewById(R.id.editTextAutorAñadir)
+        val editTextAnio: EditText = view.findViewById(R.id.editTextAnioAñadir)
+        val editTextSinopsis: EditText = view.findViewById(R.id.editTextSinopsisAñadir)
+        val editTextLatitud: EditText = view.findViewById(R.id.editTextLatitudAñadir)
+        val editTextLongitud: EditText = view.findViewById(R.id.editTextLongitudAñadir)
+
+        builder.setView(view)
+            .setTitle("Añadir Novela a la Lista")
+            .setNegativeButton("Cancelar", null)
+            .setPositiveButton("Añadir") { _, _ ->
+                val titulo = editTextTitulo.text.toString()
+                val autor = editTextAutor.text.toString()
+                val añoPublicacion = editTextAnio.text.toString().toIntOrNull() ?: 0
+                val sinopsis = editTextSinopsis.text.toString()
+                val latitud = editTextLatitud.text.toString().toDoubleOrNull()
+                val longitud = editTextLongitud.text.toString().toDoubleOrNull()
+                añadirNovelaLista(titulo, autor, añoPublicacion, sinopsis, latitud, longitud)
+            }
+        builder.create().show()
     }
 
     private fun eliminarNovelaLista(titulo: String) {

@@ -1,17 +1,17 @@
 package com.example.aplicacionnovela.ui.theme
-
 import android.os.Parcel
 import android.os.Parcelable
 
-
-data class Novela(
+data class  Novela(
     var id: String? = null,
     var titulo: String = "",
     var autor: String = "",
     var añoPublicacion: Int = 0,
     var sinopsis: String = "",
     var favorito: Boolean = false,
-    var reseñas: List<String> = emptyList()
+    var reseñas: List<Any> = emptyList(),
+    var latitud: Double? = null,
+    var longitud: Double? = null
 ) : Parcelable {
     constructor() : this(null, "", "", 0, "", false)
     constructor(parcel: Parcel) : this(
@@ -20,7 +20,9 @@ data class Novela(
         parcel.readString() ?: "",
         parcel.readInt(),
         parcel.readString() ?: "",
-        parcel.readByte() != 0.toByte()
+        parcel.readByte() != 0.toByte(),
+        listOf(parcel.readDouble()),
+        parcel.readDouble()
     )
 
     override fun describeContents(): Int {
@@ -34,6 +36,8 @@ data class Novela(
         parcel.writeInt(añoPublicacion)
         parcel.writeString(sinopsis)
         parcel.writeByte(if (favorito) 1 else 0)
+        parcel.writeDouble(latitud ?: 0.0)
+        parcel.writeDouble(longitud ?: 0.0)
     }
 
     companion object CREATOR : Parcelable.Creator<Novela> {
